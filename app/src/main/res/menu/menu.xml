@@ -15,6 +15,12 @@
         android:id="@+id/opc4"
         android:title="Eliminar/Quitar"/>
     <item
+        android:id="@+id/opc5"
+        android:title="Creador"/>
+    <item
+        android:id="@+id/opc6"
+        android:title="Contacto"/>
+    <item
         android:id="@+id/opc_cerrar_sesion"
         android:title="Cerrar Sesión"
         android:icon="@android:drawable/ic_lock_power_off"
@@ -24,5 +30,6 @@
         android:icon="@android:drawable/ic_menu_delete"
         android:title="Eliminar"
         app:showAsAction="always" />
+
 
 </menu>
