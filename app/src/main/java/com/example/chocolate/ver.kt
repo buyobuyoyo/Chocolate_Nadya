@@ -53,6 +53,7 @@ class Ver : AppCompatActivity() {
             menu?.findItem(R.id.opc1)?.isVisible = false  // Registro
             menu?.findItem(R.id.opc3)?.isVisible = false  // Cambiar
             menu?.findItem(R.id.opc4)?.isVisible = false  // Eliminar
+            menu?.findItem(R.id.opc_eliminar)?.isVisible = false // Bote de basura
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -83,6 +84,15 @@ class Ver : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
+        }
+
+        if (item.itemId == R.id.opc_eliminar) {
+            if (choco.listaChocolates.size <= 0) {
+                Toast.makeText(this, "No hay chocolates registrados", Toast.LENGTH_SHORT).show()
+            } else {
+                val cambio = Intent(this, eliminarchocolate::class.java)
+                startActivity(cambio)
+            }
         }
 
         return super.onOptionsItemSelected(item)

@@ -115,12 +115,29 @@ class VistaLista : AppCompatActivity() {
     }
 
     private fun guardarCambios() {
+        val nombre = etNombre.text.toString()
+        val marca = etMarca.text.toString()
+        val paisOrigen = etPaisOrigen.text.toString()
+        val telefono = etTelefono.text.toString()
+        val porcentaje = etPorcentajeCacao.text.toString()
+
+        when {
+            nombre.isEmpty() -> { Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show(); return }
+            marca.isEmpty() -> { Toast.makeText(this, "La marca es obligatoria", Toast.LENGTH_SHORT).show(); return }
+            paisOrigen.isEmpty() -> { Toast.makeText(this, "El país de origen es obligatorio", Toast.LENGTH_SHORT).show(); return }
+            telefono.isEmpty() -> { Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show(); return }
+            !telefono.all { it.isDigit() } -> { Toast.makeText(this, "El teléfono solo debe contener números", Toast.LENGTH_SHORT).show(); return }
+            telefono.length != 10 -> { Toast.makeText(this, "El teléfono debe tener 10 dígitos", Toast.LENGTH_SHORT).show(); return }
+            porcentaje.isEmpty() -> { Toast.makeText(this, "El % de cacao es obligatorio", Toast.LENGTH_SHORT).show(); return }
+        }
+
+
         val chocolateEditado = Chocolate(
-            nombre = etNombre.text.toString(),
-            marca = etMarca.text.toString(),
-            paisOrigen = etPaisOrigen.text.toString(),
-            telefonoContacto = etTelefono.text.toString(),
-            porcentajeCacao = etPorcentajeCacao.text.toString(),
+            nombre = nombre,
+            marca = marca,
+            paisOrigen = paisOrigen,
+            telefonoContacto = telefono,
+            porcentajeCacao = porcentaje,
             presentacion = spinnerPresentacion.selectedItem.toString(),
             tipoCacao = spinnerTipoCacao.selectedItem.toString(),
             perfilSabor = spinnerPerfilSabor.selectedItem.toString(),
@@ -130,7 +147,6 @@ class VistaLista : AppCompatActivity() {
         choco.listaChocolates[posicionActual] = chocolateEditado
         Toast.makeText(this, "Cambios guardados", Toast.LENGTH_SHORT).show()
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
 
@@ -143,6 +159,7 @@ class VistaLista : AppCompatActivity() {
             menu?.findItem(R.id.opc1)?.isVisible = false  // Registro
             menu?.findItem(R.id.opc3)?.isVisible = false  // Cambiar
             menu?.findItem(R.id.opc4)?.isVisible = false  // Eliminar
+            menu?.findItem(R.id.opc_eliminar)?.isVisible = false // Bote de basura
         }
 
         return super.onCreateOptionsMenu(menu)
@@ -176,6 +193,15 @@ class VistaLista : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
+        }
+
+        if (item.itemId == R.id.opc_eliminar) {
+            if (choco.listaChocolates.size <= 0) {
+                Toast.makeText(this, "No hay chocolates registrados", Toast.LENGTH_SHORT).show()
+            } else {
+                val cambio = Intent(this, eliminarchocolate::class.java)
+                startActivity(cambio)
+            }
         }
 
         return super.onOptionsItemSelected(item)

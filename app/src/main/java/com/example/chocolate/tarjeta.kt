@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,8 @@ class tarjeta : AppCompatActivity() {
     lateinit var tvPeso: TextView
     lateinit var btnllamar : Button
 
+    lateinit var btnRegresar : ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,6 +47,7 @@ class tarjeta : AppCompatActivity() {
         tvTipo = findViewById(R.id.tvTipo)
         tvPeso = findViewById(R.id.tvPeso)
         btnllamar = findViewById(R.id.btn_llamar)
+        btnRegresar = findViewById(R.id.btnRegresar)
         btnllamar.setOnClickListener { llamar() }
 
         val posicion: Int
@@ -67,7 +71,13 @@ class tarjeta : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+        btnRegresar.setOnClickListener {
+            finish()
+        }
     }
+
 
     private fun llamar() {
         //Necesitamos que el usuario nos de autorización

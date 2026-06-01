@@ -85,23 +85,36 @@ class MainActivity : AppCompatActivity() {
         spinnerPeso.adapter = adapterPeso
 
         btnGuardar.setOnClickListener {
-            if (etNombre.text.toString().isEmpty()) {
-                Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show()
-            } else {
-                val chocolate = Chocolate(
-                    nombre = etNombre.text.toString(),
-                    marca = etMarca.text.toString(),
-                    paisOrigen = etPaisOrigen.text.toString(),
-                    telefonoContacto = etTelefono.text.toString(),
-                    presentacion = spinnerPresentacion.selectedItem.toString(),
-                    porcentajeCacao = etPorcentajeCacao.text.toString(),
-                    tipoCacao = spinnerTipoCacao.selectedItem.toString(),
-                    perfilSabor = spinnerPerfilSabor.selectedItem.toString(),
-                    tipo = spinnerTipo.selectedItem.toString(),
-                    peso = spinnerPeso.selectedItem.toString()
-                )
-                choco.listaChocolates.add(chocolate)
-                Toast.makeText(this, "Chocolate guardado!", Toast.LENGTH_SHORT).show()
+            val nombre = etNombre.text.toString()
+            val marca = etMarca.text.toString()
+            val paisOrigen = etPaisOrigen.text.toString()
+            val telefono = etTelefono.text.toString()
+            val porcentaje = etPorcentajeCacao.text.toString()
+
+            when {
+                nombre.isEmpty() -> Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show()
+                marca.isEmpty() -> Toast.makeText(this, "La marca es obligatoria", Toast.LENGTH_SHORT).show()
+                paisOrigen.isEmpty() -> Toast.makeText(this, "El país de origen es obligatorio", Toast.LENGTH_SHORT).show()
+                telefono.isEmpty() -> Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show()
+                !telefono.all { it.isDigit() } -> Toast.makeText(this, "El teléfono solo debe contener números", Toast.LENGTH_SHORT).show()
+                telefono.length != 10 -> Toast.makeText(this, "El teléfono debe tener 10 dígitos", Toast.LENGTH_SHORT).show()
+                porcentaje.isEmpty() -> Toast.makeText(this, "El % de cacao es obligatorio", Toast.LENGTH_SHORT).show()
+                else -> {
+                    val chocolate = Chocolate(
+                        nombre = nombre,
+                        marca = marca,
+                        paisOrigen = paisOrigen,
+                        telefonoContacto = telefono,
+                        porcentajeCacao = porcentaje,
+                        presentacion = spinnerPresentacion.selectedItem.toString(),
+                        tipoCacao = spinnerTipoCacao.selectedItem.toString(),
+                        perfilSabor = spinnerPerfilSabor.selectedItem.toString(),
+                        tipo = spinnerTipo.selectedItem.toString(),
+                        peso = spinnerPeso.selectedItem.toString()
+                    )
+                    choco.listaChocolates.add(chocolate)
+                    Toast.makeText(this, "Chocolate guardado!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -119,6 +132,7 @@ class MainActivity : AppCompatActivity() {
             menu?.findItem(R.id.opc1)?.isVisible = false  // Registro
             menu?.findItem(R.id.opc3)?.isVisible = false  // Cambiar
             menu?.findItem(R.id.opc4)?.isVisible = false  // Eliminar
+            menu?.findItem(R.id.opc_eliminar)?.isVisible = false // Bote de basura
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -162,6 +176,15 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
+        }
+
+        if (item.itemId == R.id.opc_eliminar) {
+            if (choco.listaChocolates.size <= 0) {
+                Toast.makeText(this, "No hay chocolates registrados", Toast.LENGTH_SHORT).show()
+            } else {
+                val cambio = Intent(this, eliminarchocolate::class.java)
+                startActivity(cambio)
+            }
         }
 
         return super.onOptionsItemSelected(item)
