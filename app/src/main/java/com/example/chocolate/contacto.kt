@@ -30,6 +30,7 @@ class contacto : AppCompatActivity() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
         if (item.itemId == R.id.opc1) {
             val cambio = Intent(this, MainActivity::class.java)
             startActivity(cambio)
