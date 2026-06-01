@@ -78,6 +78,16 @@ class Ver : AppCompatActivity() {
             startActivity(cambio)
         }
 
+        if (item.itemId == R.id.opc5) {
+            val cambio = Intent(this, creador::class.java)
+            startActivity(cambio)
+        }
+
+        if (item.itemId == R.id.opc6) {
+            val cambio = Intent(this, contacto::class.java)
+            startActivity(cambio)
+        }
+
         if (item.itemId == R.id.opc_cerrar_sesion) {
             val prefs = getSharedPreferences("sesion", MODE_PRIVATE)
             prefs.edit().clear().apply()
