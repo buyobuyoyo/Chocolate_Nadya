@@ -2,13 +2,15 @@ package com.example.chocolate
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.view.Menu
+import android.view.MenuItem
+import com.example.chocolate.R
 
 class contacto : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +31,23 @@ class contacto : AppCompatActivity() {
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
+
+        val prefs = getSharedPreferences("sesion", MODE_PRIVATE)
+        val rol = prefs.getString("rol", "")
+
+        if (rol == "trabajador") {
+            menu?.findItem(R.id.opc1)?.isVisible = false
+            menu?.findItem(R.id.opc3)?.isVisible = false
+            menu?.findItem(R.id.opc4)?.isVisible = false
+            menu?.findItem(R.id.opc_eliminar)?.isVisible = false
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.opc1) {
             val cambio = Intent(this, MainActivity::class.java)
             startActivity(cambio)
@@ -43,7 +60,6 @@ class contacto : AppCompatActivity() {
             val cambio = Intent(this, VistaLista::class.java)
             startActivity(cambio)
         }
-
         if (item.itemId == R.id.opc4) {
             if (choco.listaChocolates.size <= 0) {
                 Toast.makeText(this, "No hay chocolates registrados", Toast.LENGTH_SHORT).show()
@@ -52,16 +68,13 @@ class contacto : AppCompatActivity() {
                 startActivity(cambio)
             }
         }
-
         if (item.itemId == R.id.opc5) {
             val cambio = Intent(this, creador::class.java)
             startActivity(cambio)
         }
-
         if (item.itemId == R.id.opc6) {
             Toast.makeText(this, "Ya estás en esta opción", Toast.LENGTH_SHORT).show()
         }
-
         if (item.itemId == R.id.opc_cerrar_sesion) {
             val prefs = getSharedPreferences("sesion", MODE_PRIVATE)
             prefs.edit().clear().apply()
@@ -69,7 +82,6 @@ class contacto : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
         if (item.itemId == R.id.opc_eliminar) {
             if (choco.listaChocolates.size <= 0) {
                 Toast.makeText(this, "No hay chocolates registrados", Toast.LENGTH_SHORT).show()
@@ -78,7 +90,6 @@ class contacto : AppCompatActivity() {
                 startActivity(cambio)
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 }
