@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class EliminarAdapter (private val lista: MutableList<Chocolate>) : RecyclerView.Adapter<EliminarAdapter.ViewHolderClass>(){
 
-    private val selectedItems = mutableSetOf<Chocolate>()
+    private val selectedIndices = mutableSetOf<Int>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,33 +20,30 @@ class EliminarAdapter (private val lista: MutableList<Chocolate>) : RecyclerView
         return ViewHolderClass(view)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolderClass,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val item = lista[position]
         holder.nombre.text = item.nombre
         holder.tipo.text = item.tipo
         holder.peso.text = item.peso
 
         holder.checkBox.setOnCheckedChangeListener(null)
-        holder.checkBox.isChecked = selectedItems.contains(item)
+        holder.checkBox.isChecked = selectedIndices.contains(position)  // 👈
 
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) selectedItems.add(item)
-            else selectedItems.remove(item)
+            val pos = holder.adapterPosition          // 👈
+            if (pos == RecyclerView.NO_ID.toInt()) return@setOnCheckedChangeListener
+            if (isChecked) selectedIndices.add(pos)
+            else selectedIndices.remove(pos)
         }
     }
 
     override fun getItemCount(): Int = lista.size
 
     fun deleteSelected() {
-        // 👇 Elimina por índice de atrás hacia adelante
-        val indices = lista.indices.filter { lista[it] in selectedItems }
-        for (i in indices.reversed()) {
+        for (i in selectedIndices.sortedDescending()) {  // 👈 de atrás hacia adelante
             lista.removeAt(i)
         }
-        selectedItems.clear()
+        selectedIndices.clear()
         notifyDataSetChanged()
     }
 
