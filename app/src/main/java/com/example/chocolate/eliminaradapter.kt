@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 class EliminarAdapter (private val lista: MutableList<Chocolate>) : RecyclerView.Adapter<EliminarAdapter.ViewHolderClass>(){
 
     private val selectedIndices = mutableSetOf<Int>()
-
+//OnCreateViewHolder es para crear un nuevo item y que el ViewHolder sea donde inflarlo
     override fun onCreateViewHolder(
-        parent: ViewGroup,
+        parent: ViewGroup, //tamaño y forma del contenedor
         viewType: Int
     ): ViewHolderClass {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_holder_eliminar, parent, false)
+            .inflate(R.layout.item_holder_eliminar, parent, false) //le decimos que va a usar nuestro diseño del holder
         return ViewHolderClass(view)
     }
 
@@ -27,11 +27,12 @@ class EliminarAdapter (private val lista: MutableList<Chocolate>) : RecyclerView
         holder.peso.text = item.peso
 
         holder.checkBox.setOnCheckedChangeListener(null)
-        holder.checkBox.isChecked = selectedIndices.contains(position)  // 👈
+        holder.checkBox.isChecked = selectedIndices.contains(position)
 
+        //Es como el listener de un botón pero aquí verifica si la checkbox se hace click
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            val pos = holder.adapterPosition          // 👈
-            if (pos == RecyclerView.NO_ID.toInt()) return@setOnCheckedChangeListener
+            val pos = holder.adapterPosition
+            if (pos == RecyclerView.NO_ID.toInt()) return@setOnCheckedChangeListener // Es una validación de seguridad para asegurar que el elemento todavía existe y tiene una posición válida antes de hacer nada
             if (isChecked) selectedIndices.add(pos)
             else selectedIndices.remove(pos)
         }
@@ -40,7 +41,7 @@ class EliminarAdapter (private val lista: MutableList<Chocolate>) : RecyclerView
     override fun getItemCount(): Int = lista.size
 
     fun deleteSelected() {
-        for (i in selectedIndices.sortedDescending()) {  // 👈 de atrás hacia adelante
+        for (i in selectedIndices.sortedDescending()) {  //de atrás hacia adelante
             lista.removeAt(i)
         }
         selectedIndices.clear()

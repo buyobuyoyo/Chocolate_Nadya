@@ -73,7 +73,7 @@ class contacto : AppCompatActivity() {
             startActivity(cambio)
         }
         if (item.itemId == R.id.opc6) {
-            Toast.makeText(this, "Ya estás en esta opción", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Ya estás en esta opción", Toast.LENGTH_SHORT).show()
         }
         if (item.itemId == R.id.opc_cerrar_sesion) {
             val prefs = getSharedPreferences("sesion", MODE_PRIVATE)

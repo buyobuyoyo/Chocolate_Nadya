@@ -69,7 +69,8 @@ class creador : AppCompatActivity() {
         }
 
         if (item.itemId == R.id.opc5) {
-            Toast.makeText(this, "Ya estás en esta opción", Toast.LENGTH_SHORT).show()
+//            val cambio = Intent(this, creador::class.java)
+//            startActivity(cambio)
         }
 
         if (item.itemId == R.id.opc6) {

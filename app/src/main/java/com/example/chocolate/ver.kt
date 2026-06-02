@@ -65,7 +65,7 @@ class Ver : AppCompatActivity() {
         }
 
         if (item.itemId == R.id.opc2) {
-            Toast.makeText(this, "Ya estas en la opcion", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Ya estas en la opcion", Toast.LENGTH_LONG).show()
         }
 
         if (item.itemId == R.id.opc3) {

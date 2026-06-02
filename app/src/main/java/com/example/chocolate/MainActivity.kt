@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                         peso = spinnerPeso.selectedItem.toString()
                     )
                     choco.listaChocolates.add(chocolate)
-                    Toast.makeText(this, "Chocolate guardado!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Chocolate guardado", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.opc1) {
-            Toast.makeText(this, "Ya estas en la opcion", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Ya estas en la opcion", Toast.LENGTH_LONG).show()
         }
 
         if (item.itemId == R.id.opc2) {
@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity() {
 
         if (item.itemId == R.id.opc_cerrar_sesion) {
             val prefs = getSharedPreferences("sesion", MODE_PRIVATE)
-            prefs.edit().clear().apply() // 👈 limpia el SharedPreferences
+            prefs.edit().clear().apply() // limpia el shared preferences
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()

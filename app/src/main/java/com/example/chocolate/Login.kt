@@ -37,7 +37,7 @@ class Login : AppCompatActivity() {
                     guardarSesion("admin")
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    finish() // 👈 cierra el login para no poder regresar
+                    finish()
                 }
                 usuario == "trabajador" && contrasena == "trabajador123" -> {
                     guardarSesion("trabajador")
@@ -51,8 +51,13 @@ class Login : AppCompatActivity() {
                 usuario == "trabajador" && contrasena != "trabajador123" -> {
                     Toast.makeText(this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
                 }
+
                 usuario.isEmpty() && contrasena.isEmpty() -> {
                     Toast.makeText(this, "Ingresa usuario y contraseña", Toast.LENGTH_SHORT).show()
+                }
+
+                usuario != "admin" && usuario != "trabajador" && contrasena != "admin123" && contrasena != "trabajador123" -> {
+                    Toast.makeText(this, "Usuario y contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
                     Toast.makeText(this, "Usuario incorrecto", Toast.LENGTH_SHORT).show()
