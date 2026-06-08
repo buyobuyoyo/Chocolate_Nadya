@@ -74,7 +74,8 @@ class VistaLista : AppCompatActivity() {
         mostrarRegistro(posicionActual)
 
         btnSiguiente.setOnClickListener {
-            posicionActual = (posicionActual + 1) % choco.listaChocolates.size
+            posicionActual = (posicionActual + 1) % choco.listaChocolates.size //cambia de chocolate con una operación matemática, por ejemplo imagina que tienes 3 registros y
+            // la posicion actual es 3, ésta se divide entre listaChocolates.size y da 0 así que así vuelve al comienzo.
             mostrarRegistro(posicionActual)
         }
 
@@ -90,7 +91,6 @@ class VistaLista : AppCompatActivity() {
             guardarCambios()
         }
     }
-
     private fun mostrarRegistro(pos: Int) {
         val item = choco.listaChocolates[pos]
         etNombre.setText(item.nombre)
@@ -144,7 +144,7 @@ class VistaLista : AppCompatActivity() {
             tipo = spinnerTipo.selectedItem.toString(),
             peso = spinnerPeso.selectedItem.toString()
         )
-        choco.listaChocolates[posicionActual] = chocolateEditado
+        choco.listaChocolates[posicionActual] = chocolateEditado //Aquí se guarda el nuevo chocolate
         Toast.makeText(this, "Cambios guardados", Toast.LENGTH_SHORT).show()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -199,7 +199,7 @@ class VistaLista : AppCompatActivity() {
 
         if (item.itemId == R.id.opc_cerrar_sesion) {
             val prefs = getSharedPreferences("sesion", MODE_PRIVATE)
-            prefs.edit().clear().apply() // 👈 limpia el SharedPreferences
+            prefs.edit().clear().apply() // limpia el SharedPreferences
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()

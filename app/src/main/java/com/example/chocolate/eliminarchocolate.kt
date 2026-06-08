@@ -26,7 +26,7 @@ class eliminarchocolate : AppCompatActivity() {
         val toolbar : Toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        recy=findViewById<RecyclerView>(R.id.rv)
+        recy=findViewById<RecyclerView>(R.id.rv) //el recyclerview es una herramienta inteligente que recicla vistas y recy es el nombre que yo le dí
         recy.layoutManager= LinearLayoutManager(this)
 
         val adapter = EliminarAdapter(choco.listaChocolates)
@@ -97,7 +97,7 @@ class eliminarchocolate : AppCompatActivity() {
 
         if (item.itemId == R.id.opc_cerrar_sesion) {
             val prefs = getSharedPreferences("sesion", MODE_PRIVATE)
-            prefs.edit().clear().apply() // 👈 limpia el SharedPreferences
+            prefs.edit().clear().apply() // limpia el SharedPreferences
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
